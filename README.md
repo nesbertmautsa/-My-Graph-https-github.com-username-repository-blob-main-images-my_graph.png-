@@ -28,3 +28,9 @@ ax.set_ylabel('Value')
 ax.set_title('Waterfall Chart')
 
 plt.show()
+import matplotlib.pyplot as plt
+
+# Code for creating the waterfall chart
+
+# Save the chart as an image file
+plt.savefig('waterfall.png')
