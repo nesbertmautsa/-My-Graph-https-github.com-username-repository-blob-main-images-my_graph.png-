@@ -1,36 +1,36 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Sample data
-data = {'Category A': [100, -20, -30, -50], 'Category B': [80, -10, -25, -45], 'Category C': [70, -15, -20, -35]}
+# Generate some data
+categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
+values = [100, -20, 50, -80, 70]
 
-# Convert data to a stacked format
-stacked_data = []
-for i in range(len(data.keys())):
-    if i == 0:
-        stacked_data.append(data[list(data.keys())[i]])
-    else:
-        stacked_data.append([sum(x) for x in zip(stacked_data[i-1], data[list(data.keys())[i]])])
+# Calculate the cumulative values
+cum_values = np.cumsum(values)
 
-# Create the waterfall chart
-fig, ax = plt.subplots(figsize=(8,6))
+# Create the figure and axis objects
+fig, ax = plt.subplots()
 
 # Plot the bars
-for i in range(len(data.keys())):
-    if i == 0:
-        ax.bar(list(data.keys())[i], stacked_data[i][0], color='blue')
-    else:
-        ax.bar(list(data.keys())[i], stacked_data[i-1][-1], color='blue', alpha=0.5)
-        ax.bar(list(data.keys())[i], stacked_data[i][-1], color='red')
+bars = ax.bar(categories, values, color='grey', align='center')
+bars[0].set_color('g')
+bars[-1].set_color('r')
 
-# Add the labels
-ax.set_xticklabels([''] + list(data.keys()))
-ax.set_ylabel('Value')
-ax.set_title('Waterfall Chart')
+# Plot the connecting lines
+for i in range(len(bars)-1):
+    ax.plot([i, i+1], [cum_values[i], cum_values[i+1]], color='k')
 
+# Set the axis labels and title
+ax.set_xlabel('Categories')
+ax.set_ylabel('Values')
+ax.set_title('Waterfall Chart Example')
+
+# Set the y-axis limits
+ymin, ymax = ax.get_ylim()
+ax.set_ylim(ymin - 10, ymax + 10)
+
+# Save the figure to a file
+plt.savefig('waterfall_chart.png', dpi=300, bbox_inches='tight')
+
+# Show the plot
 plt.show()
-import matplotlib.pyplot as plt
-
-# Code for creating the waterfall chart
-
-# Save the chart as an image file
-plt.savefig('waterfall.png')
